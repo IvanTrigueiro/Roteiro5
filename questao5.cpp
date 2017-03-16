@@ -24,37 +24,41 @@ public:
 class ControleDeGastos{
 private:
     vector <Despesa*> despesas;
-    Despesa * despesa;
     double total;
 
 public:
-    ControleDeGastos(double v4lor){
-        despesa->setValor(v4lor);
+    ControleDeGastos(Despesa* despesa){
+        despesas.push_back(despesa);
     }
 
-    void setDespesas(double valor_new, string tipodegasto_new){
-        despesa->setValor(valor_new);
-        despesa->setTipoDeGasto(tipodegasto_new);
+    void setDespesas(Despesa* despesa){
+        despesas.push_back(despesa);
     }
 
     double TotalDespesas(){
-        total = 0.0;
-        total = total + despesa->getValor();
+        double total = 0.0;
+        vector <Despesa*>::iterator iter = despesas.begin();
+        for(iter; iter != despesas.end(); iter++){
+        total = total + (*iter)->getValor();
+        }
         return total;
     }
 };
 
 int main(){
-    ControleDeGastos gastos();
     double cost;
     string type;
 
+    //for(int i=0; i < 2; i++){}
     cout << "Qual o valor do gasto? "<<endl;
     cin >> cost;
     cout << "Com o que voce gastou? "<<endl;
     cin >> type;
 
-    gastos.setDespesas(cost, type)
+    Despesa* gasto = new Despesa(cost, type);
+    ControleDeGastos gastos(gasto);
 
-    cout >> gastos.TotalDespesas() <<endl;
+
+    cout << gastos.TotalDespesas() <<endl;
+    delete gasto;
 }
